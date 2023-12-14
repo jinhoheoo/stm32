@@ -1,0 +1,55 @@
+15:32:02 **** Incremental Build of configuration Debug for project zpio-03rtos ****
+make -j4 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F411xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/main.c:51:
+../Core/Src/../../../myLib/myLib.c: In function '__io_putchar':
+../Core/Src/../../../myLib/myLib.c:3:35: warning: passing argument 2 of 'HAL_UART_Transmit' from incompatible pointer type [-Wincompatible-pointer-types]
+    3 |         HAL_UART_Transmit(&huart2,&c,1,10);
+      |                                   ^~
+      |                                   |
+      |                                   int *
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:411,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:722:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'int *'
+  722 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
+      |                                                                ~~~~~~~~~~~~~~~^~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:104:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  104 |   printf("\033[1J\033[1;1HRTOS TEST");
+      |   ^~~~~~
+../Core/Src/main.c:52:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+   51 | #include "../../../myLib/myLib.c"
+  +++ |+#include <stdio.h>
+   52 | /* USER CODE END PV */
+../Core/Src/main.c:104:3: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  104 |   printf("\033[1J\033[1;1HRTOS TEST");
+      |   ^~~~~~
+../Core/Src/main.c:104:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Core/Src/main.c: In function 'StartDefaultTask':
+../Core/Src/main.c:298:7: warning: unused variable 'n' [-Wunused-variable]
+  298 |   int n=0;
+      |       ^
+../Core/Src/main.c: In function 'StartTask02':
+../Core/Src/main.c:327:7: warning: unused variable 'n' [-Wunused-variable]
+  327 |   int n=0;
+      |       ^
+../Core/Src/main.c: In function 'StartTask03':
+../Core/Src/main.c:356:7: warning: unused variable 'n' [-Wunused-variable]
+  356 |   int n=0;
+      |       ^
+arm-none-eabi-gcc -o "zpio-03rtos.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\workspace_intel2\arm\zpio-03rtos\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="zpio-03rtos.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: zpio-03rtos.elf
+ 
+arm-none-eabi-size   zpio-03rtos.elf 
+arm-none-eabi-objdump -h -S  zpio-03rtos.elf  > "zpio-03rtos.list"
+   text	   data	    bss	    dec	    hex	filename
+  24980	    116	  18436	  43532	   aa0c	zpio-03rtos.elf
+Finished building: default.size.stdout
+ 
+Finished building: zpio-03rtos.list
+ 
+
+15:32:03 Build Finished. 0 errors, 6 warnings. (took 1s.178ms)
+

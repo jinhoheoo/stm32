@@ -1,0 +1,67 @@
+#include "stm32f4xx_hal.h"
+
+ADC_HandleTypeDef hadc1;
+
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_ADC1_Init(void);
+
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+
+
+  MX_ADC1_Init();
+
+  HAL_ADC_Start_IT(&hadc1);  // 연속 모드로 ADC 시작 및 인터럽트 활성화
+
+  while (1)
+  {
+    // 여기에 메인 루프에서 수행할 작업을 추가
+  }
+}
+
+void SystemClock_Config(void)
+{
+  // 시스템 클럭 설정
+}
+
+static void MX_ADC1_Init(void)
+{
+  // ADC 초기화 및 연속 모드 설정
+  ADC_ChannelConfTypeDef sConfig = {0};
+
+  __HAL_RCC_ADC1_CLK_ENABLE();
+
+  hadc1.Instance = ADC1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc1.Init.ScanConvMode = DISABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;  // 연속 모드로 설정
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.NbrOfConversion = 1;
+  HAL_ADC_Init(&hadc1);
+
+  sConfig.Channel = ADC_CHANNEL_0;
+  sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+
+  HAL_NVIC_SetPriority(ADC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(ADC_IRQn);
+}
+
+void ADC_IRQHandler(void)
+{
+  HAL_ADC_IRQHandler(&hadc1);
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  // ADC 변환이 완료될 때마다 호출되는 콜백 함수
+  // 여기에 추가적인 작업을 수행할 수 있습니다.
+  // 다음 변환은 자동으로 시작됨
+}
